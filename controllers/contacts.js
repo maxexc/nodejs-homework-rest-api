@@ -52,7 +52,7 @@ const add = async (req, res) => {
 const deleteById = async (req, res) => {
   const {_id: owner} = req.user;
   const { contactId } = req.params;
-  const result = await Contact.findByIdAndDelete({_id: contactId, owner});
+  const result = await Contact.findOneAndDelete({_id: contactId, owner});
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -90,7 +90,7 @@ const updateStatusContact = async (req, res ) => {
     throw HttpError(400, "missing field favorite");
   }
 
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+  const result = await Contact.findOneAndUpdate(contactId, req.body, {
     new: true,
   });
   res.json(result);
